@@ -2,27 +2,39 @@ package com.scenario.projeto2;
 
 public class projeto {
 	
-	protected String nome;
-	protected String ambiente[];
-	protected String itemAmbiente[];
+	protected String nome[] = {"Projeto 1", "Projeto2", "Projeto3"};
+	
+	
+	/*
+	 * protected String ambiente[]; protected String itemAmbiente[];
+	 */
 	
 	//
 	
 	
-	public String Ambiente() {
-		
-		
-		return nome;
-		
-	};
+	/*
+	 * public String Ambiente() {
+	 * 
+	 * 
+	 * return nome;
+	 * 
+	 * };
+	 * 
+	 * public String itemAmbiente() { return nome;
+	 * 
+	 * }
+	 * 
+	 * protected boolean Luminaria() { return false;
+	 * 
+	 * }
+	 */
 	
-	public String itemAmbiente() {
-		return nome;
-		
-	}
 	
-	protected boolean Luminaria() {
-		return false;
+	
+	
+	
+	public projeto() {
+		
 		
 	}
 	
