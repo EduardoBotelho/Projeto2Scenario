@@ -40,6 +40,7 @@ public class ProjetoDAO {
 	}
 	
 	public ArrayList<ProjetoDTO> PesquisarProjeto(){
+
 		
 		String sql="select * from projeto";
 		conn = new ConexaoDAO().conectaBD();
@@ -65,4 +66,27 @@ public class ProjetoDAO {
 		return lista;
 		
 	}
+
+
+public void alterarProjeto(ProjetoDTO objProjetodto) {
+	
+	String sql ="update nome set nome = ? where nome = ? ";
+	conn = new ConexaoDAO().conectaBD();
+	
+	try {
+		pstm = conn.prepareStatement(sql);
+		pstm.setString(0, objProjetodto.getNome());
+		
+		pstm.execute();
+		pstm.close();
+		
+	} catch (Exception erro) {
+		
+		JOptionPane.showMessageDialog(null,"ProjetoDAO Alterar" + erro);
+		// TODO: handle exception
+	}
+	
+	
+}
+
 }

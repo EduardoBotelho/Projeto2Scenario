@@ -33,6 +33,7 @@ public class viewProjeto extends JFrame {
 	private JButton btnCadastro;
 	private JTable TabelaProjeto;
 	private JButton btnPesquisar;
+	private JButton btnAlterar;
 
 	/**
 	 * Launch the application.
@@ -73,6 +74,17 @@ public class viewProjeto extends JFrame {
 	    		
 	    	}
 	    });
+	    
+	    btnAlterar = new JButton("Alterar");
+	    btnAlterar.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		//alterarProjeto();
+	    		ListarValores();
+	    		
+	    		
+	    	}
+	    });
+	    panel.add(btnAlterar);
 	    panel.add(btnCadastro);
 		
 		JLabel lblNewLabel = new JLabel("Nome");
@@ -112,5 +124,14 @@ public class viewProjeto extends JFrame {
 			JOptionPane.showMessageDialog(null," Listar Valores View:" + erro);
 		}
 	}
-
+	
+	
+	
+	
+	
+	
+	 private void AlterarProjeto() {
+		 
+	 }
+		
 }
