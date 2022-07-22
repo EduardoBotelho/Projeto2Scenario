@@ -7,7 +7,12 @@ package View;
 	import javax.swing.JFrame;
 	import javax.swing.JPanel;
 	import javax.swing.border.EmptyBorder;
-	import javax.swing.JButton;
+
+import com.conexao.ProjetoDAO;
+
+import DTO.ProjetoDTO;
+
+import javax.swing.JButton;
 	import java.awt.event.ActionListener;
 	import java.awt.event.ActionEvent;
 	import javax.swing.JTextField;
@@ -61,9 +66,19 @@ public class viewCliente extends JFrame{
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
 			
-			JButton btnAo = new JButton("Verifica");
+			JButton btnAo = new JButton("Cadastrar");
 			btnAo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
+					String nome;
+					nome = txtNome.getText();
+					ProjetoDTO objProjetoDTO = new ProjetoDTO();
+					
+					objProjetoDTO.setNome(nome);
+					
+					ProjetoDAO objProjetoDAO = new ProjetoDAO();
+					objProjetoDAO.cadastrarProjeto(objProjetoDTO);
+					
 					JOptionPane.showMessageDialog(null, "Nome: "+txtNome.getText());
 					
 					//funcao compara nome do projeto colocado

@@ -3,4 +3,5 @@ module Projeto2 {
 	requires java.management;
 	requires java.xml;
 	requires jdk.jfr;
+	requires java.sql;
 }
