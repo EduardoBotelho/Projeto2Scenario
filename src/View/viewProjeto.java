@@ -27,6 +27,7 @@ public class viewProjeto extends JFrame {
 	
 	
 
+	protected static final ProjetoDTO ProjetoDTO = null;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField txtCadastro;
@@ -78,7 +79,7 @@ public class viewProjeto extends JFrame {
 	    btnAlterar = new JButton("Alterar");
 	    btnAlterar.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		//alterarProjeto();
+	    		alterarProjeto(ProjetoDTO);
 	    		ListarValores();
 	    		
 	    		
@@ -130,7 +131,16 @@ public class viewProjeto extends JFrame {
 	
 	
 	
-	 private void AlterarProjeto() {
+	 private void alterarProjeto(ProjetoDTO objProjetodto) {
+		 
+		 try {
+			 ProjetoDAO objProjetoDAO = new ProjetoDAO();
+			 objProjetoDAO.alterarProjeto(objProjetodto);
+						 
+			
+		} catch (Exception erro) {
+			
+			JOptionPane.showMessageDialog(null,"Alterar Valores: " + erro);		}
 		 
 	 }
 		
