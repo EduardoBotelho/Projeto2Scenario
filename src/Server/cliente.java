@@ -15,13 +15,18 @@ public class cliente {
 			
 			Socket socket = new Socket("localhost", 4444);
 			
-			ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 			ObjectOutputStream output =  new ObjectOutputStream(socket.getOutputStream());
 			
+			ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+				
 			String msg ="TESTE" ;
-			output.writeUTF(msg);
+			
 			
 			msg = input.readUTF();
+			
+			output.writeUTF(msg);
+			output.flush();
+			
 			JOptionPane.showMessageDialog(null,"Resposta:" + msg);
 			
 			
@@ -30,7 +35,13 @@ public class cliente {
 			socket.close();
 			
 			
-		} catch (Exception e) {
+		} catch (Exception erro) {
+			
+			JOptionPane.showMessageDialog(null, "Problema no tratamento da excecao " + erro);
+			
+			
+		} finally {
+			fechaSocket(socket);
 			
 		}
 
