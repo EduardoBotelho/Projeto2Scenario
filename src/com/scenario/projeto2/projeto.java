@@ -1,7 +1,14 @@
 package com.scenario.projeto2;
 
+import java.util.ArrayList;
+
+import com.conexao.ProjetoDAO;
+
+import DTO.ProjetoDTO;
+
 public class projeto {
 	
+	//ArrayList<ProjetoDTO> lista = new ArrayList<>();
 	protected String nome[] = {"Projeto 1", "Projeto2", "Projeto3"};
 	
 	
@@ -34,6 +41,8 @@ public class projeto {
 	
 	
 	public projeto() {
+	
+		
 		
 		
 	}

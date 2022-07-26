@@ -89,4 +89,24 @@ public void alterarProjeto(ProjetoDTO objProjetodto) {
 	
 }
 
+public void excluirProjeto(ProjetoDTO objProjetodto) {
+	String sql ="delete from nome where nome = ? ";
+	conn = new ConexaoDAO().conectaBD();
+	
+	try {
+		pstm = conn.prepareStatement(sql);
+		pstm.setString(1, objProjetodto.getNome());
+		
+		pstm.execute();
+		pstm.close();
+		
+	} catch (Exception erro) {
+		
+		JOptionPane.showMessageDialog(null,"ProjetoDAO Excluir" + erro);
+		// TODO: handle exception
+	}
+	
+	
+}
+
 }

@@ -29,12 +29,12 @@ public class viewProjeto extends JFrame {
 
 	protected static final ProjetoDTO ProjetoDTO = null;
 	private JPanel contentPane;
-	private JTextField textField;
 	private JTextField txtCadastro;
 	private JButton btnCadastro;
-	private JTable TabelaProjeto;
 	private JButton btnPesquisar;
 	private JButton btnAlterar;
+	private JButton btnExcluir;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -59,14 +59,14 @@ public class viewProjeto extends JFrame {
 		
 		ListarValores();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		contentPane.add(panel, BorderLayout.NORTH);
 		
 	    btnCadastro = new JButton("Cadastro");
 	    btnCadastro.addActionListener(new ActionListener() {
@@ -79,7 +79,7 @@ public class viewProjeto extends JFrame {
 	    btnAlterar = new JButton("Alterar");
 	    btnAlterar.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		alterarProjeto(ProjetoDTO);
+	    		alterarProjeto();
 	    		ListarValores();
 	    		
 	    		
@@ -87,6 +87,14 @@ public class viewProjeto extends JFrame {
 	    });
 	    panel.add(btnAlterar);
 	    panel.add(btnCadastro);
+		
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				excluirProjeto();
+			}
+		});
+		panel.add(btnExcluir);
 		
 		JLabel lblNewLabel = new JLabel("Nome");
 		panel.add(lblNewLabel);
@@ -102,15 +110,15 @@ public class viewProjeto extends JFrame {
 	  	}
 	  });
 	  panel.add(btnPesquisar);
-		
-	  TabelaProjeto = new JTable();
-		panel.add(TabelaProjeto);
+	  
+	  table = new JTable();
+	  contentPane.add(table, BorderLayout.CENTER);
 	}
 	
 	private void ListarValores() {
 		try {
 			ProjetoDAO objprojetoDao = new ProjetoDAO();
-			DefaultTableModel model = (DefaultTableModel) TabelaProjeto.getModel();
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			model.setNumRows(0);
 			
 			ArrayList<ProjetoDTO> lista = objprojetoDao.PesquisarProjeto();
@@ -131,16 +139,35 @@ public class viewProjeto extends JFrame {
 	
 	
 	
-	 private void alterarProjeto(ProjetoDTO objProjetodto) {
+	 private void alterarProjeto() {
 		 
-		 try {
-			 ProjetoDAO objProjetoDAO = new ProjetoDAO();
-			 objProjetoDAO.alterarProjeto(objProjetodto);
-						 
-			
-		} catch (Exception erro) {
-			
-			JOptionPane.showMessageDialog(null,"Alterar Valores: " + erro);		}
+		 String nome_projeto;
+		 
+		 nome_projeto= txtCadastro.getText();
+		 
+		 ProjetoDTO objProjetoDTO = new ProjetoDTO();
+		 
+		 objProjetoDTO.setNome(nome_projeto);
+		 
+		 ProjetoDAO objProjetoDAO = new ProjetoDAO();
+		 
+		 objProjetoDAO.alterarProjeto(objProjetoDTO);
+		 
+		 
+		  
+	 }
+	 
+	 
+	 private void excluirProjeto() {
+		 String nome_projeto;
+		 
+		 nome_projeto=txtCadastro.getText();
+		 
+		 ProjetoDTO objProjetoDTO = new ProjetoDTO();
+		 objProjetoDTO.setNome(nome_projeto);
+		 
+		 ProjetoDAO objProjetoDAO = new ProjetoDAO();
+		 objProjetoDAO.excluirProjeto(ProjetoDTO);
 		 
 	 }
 		
