@@ -40,11 +40,10 @@ public class cliente {
 			JOptionPane.showMessageDialog(null, "Problema no tratamento da excecao " + erro);
 			
 			
-		} finally {
-			fechaSocket(socket);
+		}
 			
 		}
 
-	}
+	
 
 }
