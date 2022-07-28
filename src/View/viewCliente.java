@@ -27,6 +27,7 @@ public class viewCliente extends JFrame{
 		private JPanel contentPane;
 		private JTextField txtNome;
 		private JTable tblProjeto;
+		private JTextField txtCodigo;
 
 		/**
 		 * Launch the application.
@@ -74,11 +75,14 @@ public class viewCliente extends JFrame{
 			btnAo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
+					int codigo;
 					String nome;
 					//String descricao;
+					codigo = txtCodigo.getText();
 					
 					nome = txtNome.getText();
 					ProjetoDTO objProjetoDTO = new ProjetoDTO();
+					
 					
 					objProjetoDTO.setNome(nome);
 					//objProjetoDTO.setDescricao(descricao);
@@ -97,6 +101,7 @@ public class viewCliente extends JFrame{
 					}
 				}
 			});
+			
 			btnAo.setBounds(299, 31, 89, 23);
 			contentPane.add(btnAo);
 			
@@ -154,7 +159,26 @@ public class viewCliente extends JFrame{
 			});
 			btnCarregaCampos.setBounds(299, 105, 89, 23);
 			contentPane.add(btnCarregaCampos);
+			
+			JLabel lblNewLabel_1 = new JLabel("Codigo");
+			lblNewLabel_1.setBounds(10, 11, 46, 14);
+			contentPane.add(lblNewLabel_1);
+			
+			txtCodigo = new JTextField();
+			txtCodigo.setBounds(103, 8, 109, 20);
+			contentPane.add(txtCodigo);
+			txtCodigo.setColumns(10);
+			
+			
 		}
+		
+		public void carregarCampos() {
+			int setar = tblProjeto.getSelectedRow();
+			
+			txtCodigo.setText(tblProjeto.getModel().getValueAt(setar, 0).toString());
+			txtNome.setText(tblProjeto.getValueAt(setar, 1).toString());
+			
+			}
 	}
 
 
