@@ -18,11 +18,15 @@ import javax.swing.JButton;
 	import javax.swing.JTextField;
 	import javax.swing.JLabel;
 	import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
 
 public class viewCliente extends JFrame{	
 
 		private JPanel contentPane;
 		private JTextField txtNome;
+		private JTable tblProjeto;
 
 		/**
 		 * Launch the application.
@@ -60,7 +64,7 @@ public class viewCliente extends JFrame{
 		 */
 		public viewCliente() {
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(100, 100, 450, 300);
+			setBounds(100, 100, 450, 511);
 			contentPane = new JPanel();
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);
@@ -71,15 +75,19 @@ public class viewCliente extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					
 					String nome;
+					//String descricao;
+					
 					nome = txtNome.getText();
 					ProjetoDTO objProjetoDTO = new ProjetoDTO();
 					
 					objProjetoDTO.setNome(nome);
+					//objProjetoDTO.setDescricao(descricao);
 					
 					ProjetoDAO objProjetoDAO = new ProjetoDAO();
 					objProjetoDAO.cadastrarProjeto(objProjetoDTO);
 					
-					JOptionPane.showMessageDialog(null, "Nome: "+txtNome.getText());
+					
+					JOptionPane.showMessageDialog(null, "Nome: " + txtNome.getText());
 					
 					//funcao compara nome do projeto colocado
 					
@@ -89,21 +97,63 @@ public class viewCliente extends JFrame{
 					}
 				}
 			});
-			btnAo.setBounds(66, 133, 89, 23);
+			btnAo.setBounds(299, 31, 89, 23);
 			contentPane.add(btnAo);
 			
 			txtNome = new JTextField();
-			txtNome.setBounds(69, 59, 109, 20);
+			txtNome.setBounds(103, 32, 109, 20);
 			contentPane.add(txtNome);
 			txtNome.setColumns(10);
 			
 			JLabel lblNome = new JLabel("Nome");
-			lblNome.setBounds(10, 62, 46, 14);
+			lblNome.setBounds(10, 35, 46, 14);
 			contentPane.add(lblNome);
 			
 			JLabel labelProjeto = new JLabel("Projeto");
-			labelProjeto.setBounds(176, 22, 46, 14);
+			labelProjeto.setBounds(47, 35, 46, 14);
 			contentPane.add(labelProjeto);
+			
+			JLabel lblNewLabel = new JLabel("Ambiente");
+			lblNewLabel.setBounds(10, 71, 46, 14);
+			contentPane.add(lblNewLabel);
+			
+			JComboBox cbxAmbiente = new JComboBox();
+			cbxAmbiente.setBounds(103, 67, 109, 22);
+			contentPane.add(cbxAmbiente);
+			
+			JButton btnNewButton = new JButton("Limpar");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					cbxAmbiente.setSelectedIndex(-1);
+				}
+			});
+			
+			btnNewButton.setBounds(299, 65, 89, 23);
+			contentPane.add(btnNewButton);
+			
+			tblProjeto = new JTable();
+			tblProjeto.setModel(new DefaultTableModel(
+				new Object[][] {
+					{null, null, null, null},
+					{null, null, null, null},
+					{null, null, null, null},
+					{null, null, null, null},
+				},
+				new String[] {
+					"Id", "Nome", "Descricao", "Ambientes"
+				}
+			));
+			tblProjeto.setBounds(10, 193, 378, 141);
+			contentPane.add(tblProjeto);
+			
+			JButton btnCarregaCampos = new JButton("Carrega Campos");
+			btnCarregaCampos.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
+			btnCarregaCampos.setBounds(299, 105, 89, 23);
+			contentPane.add(btnCarregaCampos);
 		}
 	}
 

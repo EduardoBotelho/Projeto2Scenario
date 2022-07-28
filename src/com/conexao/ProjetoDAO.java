@@ -20,13 +20,15 @@ public class ProjetoDAO {
 	
 	public void cadastrarProjeto(ProjetoDTO objProjetoDTO) {
 		
-		String sql = "insert into Projeto(nome) values(?) ";
+		String sql = "insert into Projeto(codigo,nome) values(?,?) ";
 		
 		conn = new ConexaoDAO().conectaBD();
 		
 		try {
 			pstm = conn.prepareStatement(sql);
-			pstm.setString(1, objProjetoDTO.getNome());
+			pstm.setInt(1, objProjetoDTO.getCodigo());
+			pstm.setString(2, objProjetoDTO.getNome());
+			pstm.setString(3, objProjetoDTO.getDescricao());
 			
 			pstm.execute();
 			pstm.close();
