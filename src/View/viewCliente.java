@@ -14,21 +14,28 @@ import DTO.ProjetoDTO;
 
 import javax.swing.JButton;
 	import java.awt.event.ActionListener;
-	import java.awt.event.ActionEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.awt.event.ActionEvent;
 	import javax.swing.JTextField;
 	import javax.swing.JLabel;
 	import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
 
+@SuppressWarnings("serial")
 public class viewCliente extends JFrame{	
 
 		private JPanel contentPane;
 		private JTextField txtNome;
 		private JTable tblProjeto;
 		private JTextField txtCodigo;
-
+		private JTextField txtDescricao;
+		private JComboBox<String> cbxAmbiente;
 		/**
 		 * Launch the application.
 		 */
@@ -64,6 +71,11 @@ public class viewCliente extends JFrame{
 		 * Create the frame.
 		 */
 		public viewCliente() {
+			
+			restauraDadosComboBox();
+			listarValores();
+			
+			
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 511);
 			contentPane = new JPanel();
@@ -71,21 +83,23 @@ public class viewCliente extends JFrame{
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
 			
-			JButton btnAo = new JButton("Cadastrar");
-			btnAo.addActionListener(new ActionListener() {
+			JButton btnCadastrar = new JButton("Cadastrar");
+			btnCadastrar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
 					int codigo;
 					String nome;
-					//String descricao;
-					codigo = txtCodigo.getText();
+					String descricao;
 					
+					codigo = Integer.parseInt(txtCodigo.getText());
 					nome = txtNome.getText();
+					descricao = txtDescricao.getText();
+					
 					ProjetoDTO objProjetoDTO = new ProjetoDTO();
 					
-					
+					objProjetoDTO.setCodigo(codigo);
 					objProjetoDTO.setNome(nome);
-					//objProjetoDTO.setDescricao(descricao);
+					objProjetoDTO.setDescricao(descricao);
 					
 					ProjetoDAO objProjetoDAO = new ProjetoDAO();
 					objProjetoDAO.cadastrarProjeto(objProjetoDTO);
@@ -95,15 +109,12 @@ public class viewCliente extends JFrame{
 					
 					//funcao compara nome do projeto colocado
 					
-					if(txtNome.getText() == "teste") //nomeArmazenadoProjeto()))
-					{
-						//showprojectinfo
-					}
+					
 				}
 			});
 			
-			btnAo.setBounds(299, 31, 89, 23);
-			contentPane.add(btnAo);
+			btnCadastrar.setBounds(299, 31, 89, 23);
+			contentPane.add(btnCadastrar);
 			
 			txtNome = new JTextField();
 			txtNome.setBounds(103, 32, 109, 20);
@@ -119,22 +130,27 @@ public class viewCliente extends JFrame{
 			contentPane.add(labelProjeto);
 			
 			JLabel lblNewLabel = new JLabel("Ambiente");
-			lblNewLabel.setBounds(10, 71, 46, 14);
+			lblNewLabel.setBounds(10, 109, 46, 14);
 			contentPane.add(lblNewLabel);
 			
-			JComboBox cbxAmbiente = new JComboBox();
-			cbxAmbiente.setBounds(103, 67, 109, 22);
+			JComboBox<ProjetoDAO> cbxAmbiente = new JComboBox<ProjetoDAO>();
+			cbxAmbiente.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					restauraDadosComboBox();
+				}
+			});
+			cbxAmbiente.setModel(new DefaultComboBoxModel(new String[] {"Selecione"}));
+			cbxAmbiente.setSelectedIndex(0);
+			cbxAmbiente.setBounds(103, 105, 109, 22);
 			contentPane.add(cbxAmbiente);
 			
-			JButton btnNewButton = new JButton("Limpar");
-			btnNewButton.addActionListener(new ActionListener() {
+			JButton btnLimpar = new JButton("Limpar");
+			btnLimpar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					cbxAmbiente.setSelectedIndex(-1);
 				}
 			});
 			
-			btnNewButton.setBounds(299, 65, 89, 23);
-			contentPane.add(btnNewButton);
 			
 			tblProjeto = new JTable();
 			tblProjeto.setModel(new DefaultTableModel(
@@ -154,10 +170,11 @@ public class viewCliente extends JFrame{
 			JButton btnCarregaCampos = new JButton("Carrega Campos");
 			btnCarregaCampos.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					carregarCampos();
+					restauraDadosComboBox();
 				}
 			});
-			btnCarregaCampos.setBounds(299, 105, 89, 23);
+			btnCarregaCampos.setBounds(299, 159, 89, 23);
 			contentPane.add(btnCarregaCampos);
 			
 			JLabel lblNewLabel_1 = new JLabel("Codigo");
@@ -169,7 +186,115 @@ public class viewCliente extends JFrame{
 			contentPane.add(txtCodigo);
 			txtCodigo.setColumns(10);
 			
+			txtDescricao = new JTextField();
+			txtDescricao.setBounds(103, 66, 109, 20);
+			contentPane.add(txtDescricao);
+			txtDescricao.setColumns(10);
 			
+			JLabel lblNewLabel_2 = new JLabel("Descricao");
+			lblNewLabel_2.setBounds(10, 69, 46, 14);
+			contentPane.add(lblNewLabel_2);
+			
+			JButton btnAlterar = new JButton("Alterar");
+			btnAlterar.setBounds(299, 65, 89, 23);
+			contentPane.add(btnAlterar);
+			
+			btnAlterar.addActionListener(new ActionListener() {
+		    	public void actionPerformed(ActionEvent e) {
+		    		alterarProjeto();
+		    		listarValores();
+		    		
+		    		
+		    	}
+		    });
+		    
+			
+			
+			JButton btnExcluir = new JButton("Excluir");
+			btnExcluir.setBounds(299, 105, 89, 23);
+			contentPane.add(btnExcluir);
+			
+			
+		}
+		
+		
+		private void excluirProjeto() {
+			 String nome_projeto;
+			 
+			 nome_projeto=txtNome.getText();
+			 
+			 ProjetoDTO objProjetoDTO = new ProjetoDTO();
+			 objProjetoDTO.setNome(nome_projeto);
+			 
+			 ProjetoDAO objProjetoDAO = new ProjetoDAO();
+			 objProjetoDAO.excluirProjeto(objProjetoDTO);
+			 
+		 }
+		
+		
+		 private void alterarProjeto() {
+			 
+			 String nome_projeto;
+			 
+			 nome_projeto= txtNome.getText();
+			 
+			 ProjetoDTO objProjetoDTO = new ProjetoDTO();
+			 
+			 objProjetoDTO.setNome(nome_projeto);
+			 
+			 ProjetoDAO objProjetoDAO = new ProjetoDAO();
+			 
+			 objProjetoDAO.alterarProjeto(objProjetoDTO);
+			 
+			 
+			  
+		 }
+		
+		
+		
+		
+		private void listarValores() {
+			try {
+				ProjetoDAO objprojetoDao = new ProjetoDAO();
+				DefaultTableModel model = (DefaultTableModel) tblProjeto.getModel();
+				model.setNumRows(0);
+				
+				ArrayList<ProjetoDTO> lista = objprojetoDao.PesquisarProjeto();
+				for(int num = 0;num < lista.size();num++) {
+					model.addRow(new Object[]{
+						lista.get(num).getNome(),
+					});
+				}
+				
+				
+			} catch (Exception erro) {
+				JOptionPane.showMessageDialog(null," Listar Valores View:" + erro);
+			}
+		}
+		
+		
+		
+		
+		
+		Vector<Integer> id_ambiente = new Vector<Integer>();
+		
+		public void restauraDadosComboBox() {
+			try {
+				
+				ProjetoDAO objprojetoDAO = new ProjetoDAO();
+				ResultSet rs = objprojetoDAO.listarAmbiente();
+				
+				while(rs.next()) {
+					id_ambiente.addElement(rs.getInt(1));
+					cbxAmbiente.addItem(rs.getString(2));
+					
+					}
+			
+				
+			} catch (SQLException erro) {
+				
+				JOptionPane.showMessageDialog(null, " Carregar ComboBox: " +  erro);
+			}
 		}
 		
 		public void carregarCampos() {
@@ -180,6 +305,9 @@ public class viewCliente extends JFrame{
 			
 			}
 	}
+
+
+
 
 
 

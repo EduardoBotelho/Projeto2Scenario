@@ -20,7 +20,7 @@ public class ProjetoDAO {
 	
 	public void cadastrarProjeto(ProjetoDTO objProjetoDTO) {
 		
-		String sql = "insert into Projeto(codigo,nome) values(?,?) ";
+		String sql = "insert into Projeto(id,nome,descricao) values(?,?,?) ";
 		
 		conn = new ConexaoDAO().conectaBD();
 		
@@ -110,5 +110,25 @@ public void excluirProjeto(ProjetoDTO objProjetodto) {
 	
 	
 }
+
+    public ResultSet listarAmbiente() {
+    	conn = new ConexaoDAO().conectaBD();
+    	String sql ="SELECT * FROM Ambiente ORDER BY itens";
+    	
+    	try {
+			
+    		pstm = conn.prepareStatement(sql);
+    		return pstm.executeQuery();
+    		
+    		
+		} catch (SQLException erro) {
+			JOptionPane.showMessageDialog(null, "Listar Ambiente ProjetoDAO : " + erro.getMessage());
+			return null;
+		}
+    	
+    	
+    	
+    	
+    }
 
 }
