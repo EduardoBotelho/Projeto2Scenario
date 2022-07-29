@@ -72,7 +72,7 @@ public class ProjetoDAO {
 
 public void alterarProjeto(ProjetoDTO objProjetodto) {
 	
-	String sql ="update nome set nome = ? where nome = ? ";
+	String sql ="update projeto set nome = ? where nome = ? ";
 	conn = new ConexaoDAO().conectaBD();
 	
 	try {
@@ -92,7 +92,7 @@ public void alterarProjeto(ProjetoDTO objProjetodto) {
 }
 
 public void excluirProjeto(ProjetoDTO objProjetodto) {
-	String sql ="delete from nome where nome = ? ";
+	String sql ="delete from projeto where nome = ? ";
 	conn = new ConexaoDAO().conectaBD();
 	
 	try {

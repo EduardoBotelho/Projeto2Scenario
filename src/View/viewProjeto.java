@@ -57,7 +57,7 @@ public class viewProjeto extends JFrame {
 	 */
 	public viewProjeto() {
 		
-		ListarValores();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 502);
 		contentPane = new JPanel();
@@ -76,22 +76,10 @@ public class viewProjeto extends JFrame {
 	    	}
 	    });
 	    
-	    btnAlterar = new JButton("Alterar");
-	    btnAlterar.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		alterarProjeto();
-	    		ListarValores();
-	    		
-	    		
-	    	}
-	    });
-	    panel.add(btnAlterar);
-	    panel.add(btnCadastro);
-		
-		btnExcluir = new JButton("Excluir");
+	    btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				excluirProjeto();
+		
 			}
 		});
 		panel.add(btnExcluir);
@@ -106,7 +94,7 @@ public class viewProjeto extends JFrame {
 	  btnPesquisar = new JButton("Pesquisar");
 	  btnPesquisar.addActionListener(new ActionListener() {
 	  	public void actionPerformed(ActionEvent e) {
-	  		ListarValores();
+	  		
 	  	}
 	  });
 	  panel.add(btnPesquisar);
@@ -115,60 +103,13 @@ public class viewProjeto extends JFrame {
 	  contentPane.add(table, BorderLayout.CENTER);
 	}
 	
-	private void ListarValores() {
-		try {
-			ProjetoDAO objprojetoDao = new ProjetoDAO();
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			model.setNumRows(0);
-			
-			ArrayList<ProjetoDTO> lista = objprojetoDao.PesquisarProjeto();
-			for(int num = 0;num < lista.size();num++) {
-				model.addRow(new Object[]{
-					lista.get(num).getNome(),
-				});
-			}
-			
-			
-		} catch (Exception erro) {
-			JOptionPane.showMessageDialog(null," Listar Valores View:" + erro);
-		}
-	}
 	
 	
 	
 	
 	
 	
-	 private void alterarProjeto() {
-		 
-		 String nome_projeto;
-		 
-		 nome_projeto= txtCadastro.getText();
-		 
-		 ProjetoDTO objProjetoDTO = new ProjetoDTO();
-		 
-		 objProjetoDTO.setNome(nome_projeto);
-		 
-		 ProjetoDAO objProjetoDAO = new ProjetoDAO();
-		 
-		 objProjetoDAO.alterarProjeto(objProjetoDTO);
-		 
-		 
-		  
-	 }
 	 
 	 
-	 private void excluirProjeto() {
-		 String nome_projeto;
-		 
-		 nome_projeto=txtCadastro.getText();
-		 
-		 ProjetoDTO objProjetoDTO = new ProjetoDTO();
-		 objProjetoDTO.setNome(nome_projeto);
-		 
-		 ProjetoDAO objProjetoDAO = new ProjetoDAO();
-		 objProjetoDAO.excluirProjeto(ProjetoDTO);
-		 
-	 }
-		
+	 	
 }

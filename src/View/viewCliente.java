@@ -72,9 +72,9 @@ public class viewCliente extends JFrame{
 		 */
 		public viewCliente() {
 			
-			restauraDadosComboBox();
-			listarValores();
 			
+			//listarValores();
+		//	restauraDadosComboBox();
 			
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 511);
@@ -153,15 +153,16 @@ public class viewCliente extends JFrame{
 			
 			
 			tblProjeto = new JTable();
+			tblProjeto.setCellSelectionEnabled(true);
+			tblProjeto.setColumnSelectionAllowed(true);
 			tblProjeto.setModel(new DefaultTableModel(
 				new Object[][] {
-					{null, null, null, null},
-					{null, null, null, null},
-					{null, null, null, null},
-					{null, null, null, null},
+					{null, null, null},
+					{null, null, null},
+					{null, null, null},
 				},
 				new String[] {
-					"Id", "Nome", "Descricao", "Ambientes"
+					"Id", "Nome", "Descricao"
 				}
 			));
 			tblProjeto.setBounds(10, 193, 378, 141);
@@ -174,7 +175,7 @@ public class viewCliente extends JFrame{
 					restauraDadosComboBox();
 				}
 			});
-			btnCarregaCampos.setBounds(299, 159, 89, 23);
+			btnCarregaCampos.setBounds(299, 378, 133, 23);
 			contentPane.add(btnCarregaCampos);
 			
 			JLabel lblNewLabel_1 = new JLabel("Codigo");
@@ -211,8 +212,22 @@ public class viewCliente extends JFrame{
 			
 			
 			JButton btnExcluir = new JButton("Excluir");
+			btnExcluir.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					excluirProjeto();
+				}
+			});
 			btnExcluir.setBounds(299, 105, 89, 23);
 			contentPane.add(btnExcluir);
+			
+			JButton btnNewButton = new JButton("Limpar");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					limparCampos();
+				}
+			});
+			btnNewButton.setBounds(299, 139, 89, 23);
+			contentPane.add(btnNewButton);
 			
 			
 		}
@@ -254,6 +269,8 @@ public class viewCliente extends JFrame{
 		
 		
 		private void listarValores() {
+			
+			
 			try {
 				ProjetoDAO objprojetoDao = new ProjetoDAO();
 				DefaultTableModel model = (DefaultTableModel) tblProjeto.getModel();
@@ -297,13 +314,23 @@ public class viewCliente extends JFrame{
 			}
 		}
 		
-		public void carregarCampos() {
+		private void carregarCampos() {
 			int setar = tblProjeto.getSelectedRow();
 			
 			txtCodigo.setText(tblProjeto.getModel().getValueAt(setar, 0).toString());
 			txtNome.setText(tblProjeto.getValueAt(setar, 1).toString());
+			txtDescricao.setText(tblProjeto.getValueAt(setar, 2).toString());
 			
 			}
+		
+		
+		private void limparCampos() {
+			txtCodigo.setText("");
+			txtNome.setText("");
+			txtDescricao.setText("");
+			txtCodigo.requestFocus();
+			
+		}
 	}
 
 
